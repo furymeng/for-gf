@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Are you the most beautiful girl?</title>
+
+<!-- Cute Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd6e0, #ffb6c1, #ffe6f2);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
+
+  /* Floating hearts background */
+  .heart {
+    position: fixed;
+    bottom: -10px;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) scale(1); opacity: 0.8; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+  }
+
+  /* Center box */
+  .box {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 182, 193, 0.8);
+    width: 350px;
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 20px rgba(255, 182, 193, 0.6); }
+    to { box-shadow: 0 0 40px rgba(255, 105, 180, 0.9); }
+  }
+
+  h1 {
+    color: #ff4d6d;
+    font-size: 22px;
+  }
+
+  .buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #yes {
+    background-color: #ff4d6d;
+    color: white;
+  }
+
+  #yes:hover {
+    background-color: #e63e5e;
+    transform: scale(1.1);
+  }
+
+  #no {
+    background-color: #f0f0f0;
+    color: #333;
+    position: relative;
+  }
+
+  #no:hover {
+    background-color: #ffe4e1;
+  }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .confetti div {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: hsl(var(--hue), 70%, 60%);
+    animation: fall 2s linear infinite;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="box" id="main-box">
+    <div class="tenor-gif-embed" data-postid="1915095380882195511" data-share-method="host" data-aspect-ratio="1.71724" data-width="100%"><a href="https://tenor.com/view/bubu-dudu-bubu-dudu-love-eating-bubu-dudu-gif-1915095380882195511">Bubu Dudu Bubu Dudu Love Sticker</a>from <a href="https://tenor.com/search/bubu+dudu-stickers">Bubu Dudu Stickers</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 😳</button>
+    </div>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+<script>
+  const noBtn = document.getElementById('no');
+  const yesBtn = document.getElementById('yes');
+  const confetti = document.getElementById('confetti');
+
+  // Floating hearts
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.textContent = '💖';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+    heart.style.animationDuration = 3 + Math.random() * 5 + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }
+  setInterval(createHeart, 500);
+
+  // Move "No" randomly
+  noBtn.addEventListener('mouseover', moveNo);
+  noBtn.addEventListener('click', moveNo);
+
+  function moveNo() {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }
+
+yesBtn.addEventListener('click', () => {
+  document.body.innerHTML = `
+    <div style="text-align:center; color:#ff4d6d; font-family:Poppins; font-size:24px; animation: fadeIn 2s; width:20%; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+      <h1>🎉 Yes you are! 🎉</h1>
+      <p>You should know it, my girl 💕</p>
+
+      <!-- Tenor GIF Embed -->
+      <div class="tenor-gif-embed" 
+           data-postid="4196456183164530770" 
+           data-share-method="host" 
+           data-aspect-ratio="1" 
+           data-width="100%">
+      </div>
+    </div>
+  `;
+
+  // Add Tenor embed script dynamically
+  const tenorScript = document.createElement('script');
+  tenorScript.src = "https://tenor.com/embed.js";
+  tenorScript.async = true;
+  document.body.appendChild(tenorScript);
+
+  launchConfetti();
+});
+
+
+  // Confetti effect
+  function launchConfetti() {
+    for (let i = 0; i < 100; i++) {
+      const piece = document.createElement('div');
+      piece.style.setProperty('--hue', Math.random() * 360);
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.animationDuration = 2 + Math.random() * 3 + 's';
+      piece.style.opacity = Math.random();
+      confetti.appendChild(piece);
+      setTimeout(() => piece.remove(), 4000);
+    }
+  }
+
+  // Fade-in message effect
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
